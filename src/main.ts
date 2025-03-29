@@ -6,7 +6,7 @@ import verify from "./features/verify/verifyHandlers.js";
 import { uploadRouter } from "./features/upload/uploadHandler.js";
 
 import { StatusCodes } from "http-status-codes";
-import { AppError } from "./errror.js";
+import { AppError } from "./error.js";
 
 type Server = {
   app: Express;
