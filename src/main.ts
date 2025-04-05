@@ -2,7 +2,7 @@ import express, { ErrorRequestHandler, Express, Handler, json } from "express";
 
 import type { Helia } from "helia";
 import { createHelia } from "helia";
-import verify from "./features/verify/verifyHandlers.js";
+import { verifyRouter } from "./features/verify/verifyHandlers.js";
 import { uploadRouter } from "./features/upload/uploadHandler.js";
 
 import { StatusCodes } from "http-status-codes";
@@ -15,7 +15,7 @@ type Server = {
   initHelia: () => void;
 };
 
-export const server: Server = {
+const server: Server = {
   app: express(),
   helia: null,
 
@@ -59,8 +59,10 @@ const { app } = server;
 
 app.use(json());
 app.get("/", rootHandler);
-app.use(uploadRouter);
+app.use("/upload", uploadRouter);
+app.use("/verify", verifyRouter);
 app.use(errorHanlder);
 app.use("/*", CatchAll);
-
 server.startServer();
+
+export default { server };
