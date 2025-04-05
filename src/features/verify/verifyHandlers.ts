@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { verifyHash } from "./verifyServices.ts";
+import { getFile } from "./VerifyRepository.js";
+import App from "../../main.js";
+import { StatusCodes } from "http-status-codes";
 
-const verifyRouter = Router();
-
-verifyRouter.use("/verify");
+export const verifyRouter = Router();
 
 verifyRouter.get("/", (req, res) => {
   res.json({
@@ -11,16 +11,15 @@ verifyRouter.get("/", (req, res) => {
   });
 });
 
-verifyRouter.post("/", (req, res) => {
+verifyRouter.post("/getFile", async (req, res) => {
   const { hash } = req.body;
 
-  const isValid = verifyHash(hash);
+  const file = await getFile(hash, App.server.helia!);
 
-  if (isValid) {
-    res.status(200).json({
-      message: `File with hash ${hash} is authentic.`,
-    });
-  }
+  res.status(StatusCodes.OK).json({
+    isSuccess: true,
+    file,
+  });
 });
 
 export default { verifyRouter };
