@@ -1,7 +1,10 @@
-import { server } from "../../main";
+import { Helia } from "helia";
+import { uploadFile } from "./uploadRep.js";
 
-const { helia } = server;
-
-function uploadFile(file: string) {
-  //   helia?.datastore.put();
+export async function uploadToIpfs(
+  file: { name: string; content: string },
+  helia: Helia
+) {
+  const cid = await uploadFile(file, helia);
+  return cid;
 }
