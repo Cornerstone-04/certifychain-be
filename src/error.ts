@@ -1,3 +1,4 @@
+// custom error class
 export class AppError extends Error {
   public statuscode: number;
   public isoperational: boolean;

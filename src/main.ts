@@ -8,6 +8,7 @@ import { uploadRouter } from "./features/upload/uploadHandler.js";
 import { StatusCodes } from "http-status-codes";
 import { AppError } from "./error.js";
 
+// define server structure
 type Server = {
   app: Express;
   helia: Helia | null;
@@ -15,6 +16,7 @@ type Server = {
   initHelia: () => void;
 };
 
+// initialise server object
 const server: Server = {
   app: express(),
   helia: null,
@@ -39,6 +41,7 @@ const rootHandler: Handler = (req, res, next) => {
   });
 };
 
+// cutsom error handler middleware for custom app erros
 const errorHanlder: ErrorRequestHandler = (err, req, res, next) => {
   if (err instanceof AppError) {
     res.status(err.statuscode).json({
@@ -48,6 +51,7 @@ const errorHanlder: ErrorRequestHandler = (err, req, res, next) => {
   }
 };
 
+// error handler for unknown routes
 const CatchAll: Handler = (req, res) => {
   res.status(StatusCodes.NOT_FOUND).json({
     isSuccess: false,

@@ -6,7 +6,9 @@ import { uploadSchema } from "../../schema/index.js";
 import { uploadToIpfs } from "./uploadServices.js";
 import App from "../../main.js";
 
+// create router instance for upload routes
 export const uploadRouter = Router();
+// define GET / route for testing
 uploadRouter.get("/", (req, res) => {
   res.status(StatusCodes.OK).json({
     isSuccess: true,
@@ -14,6 +16,7 @@ uploadRouter.get("/", (req, res) => {
   });
 });
 
+// define POST /upload route for file upload
 uploadRouter.post(
   "/upload",
   verifySchema(uploadSchema),
@@ -23,6 +26,7 @@ uploadRouter.post(
     console.log(req.body);
     const cid = await uploadToIpfs(req.body, App.server.helia!);
 
+    // return success response with CID
     res.status(StatusCodes.ACCEPTED).json({
       isSuccess: true,
       cid,
