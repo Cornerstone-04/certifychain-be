@@ -1,5 +1,6 @@
 import express, { ErrorRequestHandler, Express, Handler, json } from "express";
 
+import cors from "cors";
 import type { Helia } from "helia";
 import { createHelia } from "helia";
 import { verifyRouter } from "./features/verify/verifyHandlers.js";
@@ -61,6 +62,7 @@ const CatchAll: Handler = (req, res) => {
 
 const { app } = server;
 
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(json());
 app.get("/", rootHandler);
 app.use("/upload", uploadRouter);
