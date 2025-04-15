@@ -9,6 +9,6 @@ type UploadPayload = {
 export const useUploadCertificate = () => {
   return useMutation({
     mutationFn: (data: UploadPayload) =>
-      api.post("/upload", data).then((res) => res.data),
+      api.post("/upload/upload", data).then((res) => res.data),
   });
 };
