@@ -1,8 +1,3 @@
-type FileType = {
-  path: string;
-  content: Uint8Array;
-};
-
 import { Helia } from "helia";
 import { unixfs } from "@helia/unixfs";
 
