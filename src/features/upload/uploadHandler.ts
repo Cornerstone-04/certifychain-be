@@ -8,7 +8,9 @@ import App from "../../main.js";
 import { getFile } from "../verify/VerifyRepository.js";
 import { GetFile } from "../verify/verifyServices.js";
 
+// create router instance for upload routes
 export const uploadRouter = Router();
+// define GET / route for testing
 uploadRouter.get("/", (req, res) => {
   res.status(StatusCodes.OK).json({
     isSuccess: true,

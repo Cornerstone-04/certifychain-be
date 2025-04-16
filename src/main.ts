@@ -1,5 +1,6 @@
 import express, { ErrorRequestHandler, Express, Handler, json } from "express";
 
+import cors from "cors";
 import type { Helia } from "helia";
 import { createHelia } from "helia";
 import { verifyRouter } from "./features/verify/verifyHandlers.js";
@@ -8,6 +9,7 @@ import { uploadRouter } from "./features/upload/uploadHandler.js";
 import { StatusCodes } from "http-status-codes";
 import { AppError } from "./error.js";
 
+// define server structure
 type Server = {
   app: Express;
   helia: Helia | null;
@@ -15,6 +17,7 @@ type Server = {
   initHelia: () => void;
 };
 
+// initialise server object
 const server: Server = {
   app: express(),
   helia: null,
@@ -39,6 +42,7 @@ const rootHandler: Handler = (req, res, next) => {
   });
 };
 
+// cutsom error handler middleware for custom app erros
 const errorHanlder: ErrorRequestHandler = (err, req, res, next) => {
   if (err instanceof AppError) {
     res.status(err.statuscode).json({
@@ -48,6 +52,7 @@ const errorHanlder: ErrorRequestHandler = (err, req, res, next) => {
   }
 };
 
+// error handler for unknown routes
 const CatchAll: Handler = (req, res) => {
   res.status(StatusCodes.NOT_FOUND).json({
     isSuccess: false,
@@ -57,6 +62,7 @@ const CatchAll: Handler = (req, res) => {
 
 const { app } = server;
 
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(json());
 app.get("/", rootHandler);
 app.use("/upload", uploadRouter);
