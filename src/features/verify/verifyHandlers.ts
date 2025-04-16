@@ -20,7 +20,7 @@ verifyRouter.post("/getFile", async (req, res) => {
   const { hash } = req.body;
 
   // retrieve file using hash and Helia instance
-  const file = await getFile(hash, App.server.helia!);
+  const file = await GetFile(hash, App.server.helia!);
 
   // return retrieved file in response
   res.status(StatusCodes.OK).json({
