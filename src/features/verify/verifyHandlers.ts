@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getFile } from "./VerifyRepository.js";
+import { GetFile } from "./verifyServices.js";
 import App from "../../main.js";
 import { StatusCodes } from "http-status-codes";
 
@@ -14,7 +14,7 @@ verifyRouter.get("/", (req, res) => {
 verifyRouter.post("/getFile", async (req, res) => {
   const { hash } = req.body;
 
-  const file = await getFile(hash, App.server.helia!);
+  const file = await GetFile(hash, App.server.helia!);
 
   res.status(StatusCodes.OK).json({
     isSuccess: true,

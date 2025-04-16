@@ -5,6 +5,8 @@ import { verifySchema } from "../../middlewares/verifySchema.js";
 import { uploadSchema } from "../../schema/index.js";
 import { uploadToIpfs } from "./uploadServices.js";
 import App from "../../main.js";
+import { getFile } from "../verify/VerifyRepository.js";
+import { GetFile } from "../verify/verifyServices.js";
 
 export const uploadRouter = Router();
 uploadRouter.get("/", (req, res) => {
@@ -14,18 +16,12 @@ uploadRouter.get("/", (req, res) => {
   });
 });
 
-uploadRouter.post(
-  "/upload",
-  verifySchema(uploadSchema),
-  async (req, res, next) => {
-    "console";
-    const { name, content } = req.body;
-    console.log(req.body);
-    const cid = await uploadToIpfs(req.body, App.server.helia!);
+uploadRouter.post("/", verifySchema(uploadSchema), async (req, res, next) => {
+  const cid = await uploadToIpfs(req.body, App.server.helia!);
+  const file = await GetFile(cid, App.server.helia!);
 
-    res.status(StatusCodes.ACCEPTED).json({
-      isSuccess: true,
-      cid,
-    });
-  }
-);
+  res.status(StatusCodes.ACCEPTED).json({
+    isSuccess: true,
+    cid,
+  });
+});

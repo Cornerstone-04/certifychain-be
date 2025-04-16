@@ -1,8 +1,3 @@
-type FileType = {
-  path: string;
-  content: Uint8Array;
-};
-
 import { Helia } from "helia";
 import { unixfs } from "@helia/unixfs";
 
@@ -11,10 +6,10 @@ async function uploadFile(
   helia: Helia
 ) {
   const fs = unixfs(helia);
-  const cid = await fs?.addFile({
-    path: file.name,
-    content: Uint8Array.from(file.content),
-  });
+
+  const u = Uint8Array.from(Buffer.from(file.content));
+  const cid = await fs?.addBytes(u);
+
   return cid?.toString();
 }
 

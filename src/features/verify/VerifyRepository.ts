@@ -1,15 +1,19 @@
 import { unixfs } from "@helia/unixfs";
 import { Helia } from "helia";
+import { CID } from "multiformats/dist/src";
 
-export async function getFile(cid: any, helia: Helia) {
+export async function getFile(cid: CID, helia: Helia) {
   const fs = unixfs(helia);
-  const ct = await fs.cat(cid);
-  // const chunks = [];
-  // for await (const i of fs.cat(cid)) {
-  //   console.log(i);
-  //   chunks.push(i);
-  // }
-  // const fullFile = Uint8Array.from(chunks);
-  // return Buffer.from(fullFile).toString("base64url");
-  return ct;
+  const chunks = [];
+  try {
+    console.log("inside the repository function");
+    for await (const i of fs.cat(cid)) {
+      // console.log(i);
+      chunks.push(i);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+
+  return Buffer.from(chunks[0]).toString();
 }
