@@ -1,5 +1,6 @@
 import { ifError } from "assert";
 import { Handler } from "express";
+import { StatusCodes } from "http-status-codes";
 import { ZodError, ZodSchema } from "zod";
 
 // middleware to validate request body using zod scehma
@@ -14,7 +15,7 @@ export const verifySchema = (ShemaDef: ZodSchema): Handler => {
     } catch (err) {
       // handle zod errors
       if (err instanceof ZodError) {
-        res.json({
+        res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
           isSuccess: false,
           errors: err,
         });
