@@ -6,6 +6,7 @@
   "scripts": {
     "devbuild": "tsc --watch",
     "build": "tsc",
+    "start": "node build/src/main.js",
     "dev": "nodemon build/src/main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
