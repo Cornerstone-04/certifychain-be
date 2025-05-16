@@ -12,6 +12,7 @@
   },
   "author": "",
   "license": "ISC",
+  "engines": "22.x",
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
