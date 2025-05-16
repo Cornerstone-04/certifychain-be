@@ -1,4 +1,4 @@
-# IPFS-Based Certification Verification System
+# Blockchain-Based Certification System – Backend
 
 A Node.js and Express-based backend service that serves as a proof-of-concept for a blockchain-based certification system. It enables secure file uploads to IPFS using Helia and allows verification of stored content using CIDs (Content Identifiers). This structure forms a foundational layer for building anti-fraud mechanisms around digital certificates.
 
