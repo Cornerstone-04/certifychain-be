@@ -62,7 +62,7 @@ const CatchAll: Handler = (req, res) => {
 
 const { app } = server;
 
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({ origin: "*", credentials: true }));
 app.use(json());
 app.get("/", rootHandler);
 app.use("/upload", uploadRouter);
