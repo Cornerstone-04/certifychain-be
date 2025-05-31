@@ -6,7 +6,6 @@ export async function getFile(cid: CID, helia: Helia) {
   const fs = unixfs(helia);
   const chunks = [];
   try {
-    console.log("inside the repository function");
     for await (const i of fs.cat(cid)) {
       // console.log(i);
       chunks.push(i);

@@ -7,7 +7,6 @@ import { uploadToIpfs } from "./uploadServices.js";
 import App from "../../main.js";
 import { getFile } from "../verify/VerifyRepository.js";
 import { GetFile } from "../verify/verifyServices.js";
-
 // create router instance for upload routes
 export const uploadRouter = Router();
 // define GET / route for testing
@@ -18,12 +17,17 @@ uploadRouter.get("/", (req, res) => {
   });
 });
 
-uploadRouter.post("/", verifySchema(uploadSchema), async (req, res, next) => {
-  const cid = await uploadToIpfs(req.body, App.server.helia!);
-  const file = await GetFile(cid, App.server.helia!);
-
-  res.status(StatusCodes.ACCEPTED).json({
-    isSuccess: true,
-    cid,
-  });
-});
+uploadRouter.post(
+  "/",
+  // verifySchema(uploadSchema),
+  async (req, res) => {
+    if (!req.files) res.status(StatusCodes.BAD_REQUEST).json();
+    else {
+      const cid = await uploadToIpfs(req.files, App.server.helia!);
+      res.status(StatusCodes.ACCEPTED).json({
+        isSuccess: true,
+        cid,
+      });
+    }
+  },
+);

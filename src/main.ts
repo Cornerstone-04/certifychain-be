@@ -8,6 +8,8 @@ import { uploadRouter } from "./features/upload/uploadHandler.js";
 
 import { StatusCodes } from "http-status-codes";
 import { AppError } from "./error.js";
+import multer, { diskStorage } from "multer";
+import fileUpload from "express-fileupload";
 
 // define server structure
 type Server = {
@@ -16,6 +18,17 @@ type Server = {
   startServer: () => void;
   initHelia: () => void;
 };
+
+const storage = diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "/uploads");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+
+const upload = multer({ storage });
 
 // initialise server object
 const server: Server = {
@@ -64,6 +77,12 @@ const { app } = server;
 
 app.use(cors({ origin: "*", credentials: true }));
 app.use(json());
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: "/tmp/",
+  }),
+);
 app.get("/", rootHandler);
 app.use("/upload", uploadRouter);
 app.use("/verify", verifyRouter);
