@@ -29,13 +29,14 @@
   "dependencies": {
     "@helia/http": "^2.0.4",
     "@helia/unixfs": "^5.0.0",
+    "@types/express-fileupload": "^1.5.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "express-fileupload": "^1.5.1",
     "helia": "^5.3.0",
     "multer": "1.4.5-lts.2",
     "multiformats": "^13.3.2",
-    "react": "^19.1.0",
     "zod": "^3.24.2"
   },
   "type": "module"
