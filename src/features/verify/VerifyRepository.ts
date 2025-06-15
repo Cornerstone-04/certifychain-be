@@ -5,14 +5,16 @@ import { CID } from "multiformats/dist/src";
 export async function getFile(cid: CID, helia: Helia) {
   const fs = unixfs(helia);
   const chunks = [];
+  console.log("inside the repository function");
   try {
     for await (const i of fs.cat(cid)) {
-      // console.log(i);
+      console.log("hello");
+      console.log(i);
       chunks.push(i);
     }
   } catch (err) {
     console.log(err);
   }
 
-  return Buffer.from(chunks[0]).toString();
+  return chunks;
 }
