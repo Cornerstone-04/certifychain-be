@@ -8,6 +8,8 @@ import { uploadRouter } from "./features/upload/uploadHandler.js";
 
 import { StatusCodes } from "http-status-codes";
 import { AppError } from "./error.js";
+import { FsBlockstore } from "blockstore-fs";
+import { LevelDatastore } from "datastore-level";
 import multer, { diskStorage } from "multer";
 import fileUpload from "express-fileupload";
 
@@ -42,7 +44,16 @@ const server: Server = {
     this.app.listen(3000);
   },
   async initHelia() {
-    const h = await createHelia();
+    const blockstorePath = "./ipfs/blockstore";
+    const datastorePath = "./ipfs/datastore";
+
+    const blockstore = new FsBlockstore(blockstorePath);
+    const datastore = new LevelDatastore(datastorePath);
+
+    const h = await createHelia({
+      blockstore,
+      datastore,
+    });
     this.helia = h;
     this.helia.start();
   },
