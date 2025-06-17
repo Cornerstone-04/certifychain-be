@@ -84,15 +84,25 @@ const CatchAll: Handler = (req, res) => {
   });
 };
 
+const allowedOrigins = [
+  "https://labeeb-fe.vercel.app", // your frontend domain
+  "http://localhost:5173", // local dev
+];
+
 const { app } = server;
 
-app.use(cors({ origin: "*", credentials: true }));
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  })
+);
 app.use(json());
 app.use(
   fileUpload({
     useTempFiles: true,
     tempFileDir: "/tmp/",
-  }),
+  })
 );
 app.get("/", rootHandler);
 app.use("/upload", uploadRouter);
