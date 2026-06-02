@@ -1,5 +1,6 @@
 node_modules
 build
+ipfs
 pnpm-workspace.yaml
 
 .env

@@ -1,9 +1,7 @@
-import { Helia } from "helia";
-import { CID } from "multiformats";
+import type { Helia } from "helia";
+import { CID } from "multiformats/cid";
 import { getFile } from "./VerifyRepository.js";
 
-export async function GetFile(cid: string, helia: Helia) {
-  const c = CID.parse(cid);
-  console.log("inside the service function");
-  return getFile(c, helia);
+export function getFileByCid(cid: string, helia: Helia) {
+  return getFile(CID.parse(cid), helia);
 }

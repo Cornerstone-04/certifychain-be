@@ -1,10 +1,18 @@
-// import Zod for validation
+import { CID } from "multiformats/cid";
 import { z } from "zod";
 
-// define schema for validating upload request body
-export const uploadSchema = z.object({
-  // validate 'name' to be a string with a minimum length of 0 and base64 encoded
-  name: z.string().min(0),
-  // validate 'content' to be a string with a minimum length of 0
-  content: z.string().min(0).base64(),
+export const getFileSchema = z.object({
+  hash: z.string().min(1, "A CID is required").refine((value) => {
+    try {
+      CID.parse(value);
+      return true;
+    } catch {
+      return false;
+    }
+  }, "A valid CID is required"),
+  fileType: z
+    .string()
+    .regex(/^[\w.+-]+\/[\w.+-]+$/, "A valid MIME type is required")
+    .optional(),
+  fileName: z.string().min(1).max(255).optional(),
 });
