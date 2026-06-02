@@ -22,7 +22,8 @@ bun run start
 ```
 
 The server listens on `http://localhost:3000` by default. Set `PORT` to override
-the port. Helia stores local blocks and datastore state under `./ipfs/`.
+the port. Helia stores local blocks and datastore state under `./ipfs/`. Set
+`IPFS_DATA_PATH` to use a different storage directory.
 
 ## API
 
@@ -80,3 +81,18 @@ bun run check
 bun run build
 bun run dev
 ```
+
+## Render
+
+This repository includes a `render.yaml` Blueprint. For an existing Render web
+service, use these settings in the Render dashboard:
+
+```text
+Build Command: npm install && npm run build
+Start Command: npm start
+NODE_VERSION: 22.22.0
+```
+
+Render filesystems are ephemeral by default. For certificates to remain
+available after redeploys or restarts, attach a persistent disk and set
+`IPFS_DATA_PATH` to a directory on that disk, such as `/var/data/ipfs`.

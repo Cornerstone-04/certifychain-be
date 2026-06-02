@@ -1,12 +1,14 @@
 import { FsBlockstore } from "blockstore-fs";
 import { LevelDatastore } from "datastore-level";
 import { createHelia, type Helia } from "helia";
+import { join } from "node:path";
 
 let heliaPromise: Promise<Helia> | undefined;
 
 async function initializeHelia(): Promise<Helia> {
-  const blockstore = new FsBlockstore("./ipfs/blockstore");
-  const datastore = new LevelDatastore("./ipfs/datastore");
+  const dataPath = process.env.IPFS_DATA_PATH ?? "./ipfs";
+  const blockstore = new FsBlockstore(join(dataPath, "blockstore"));
+  const datastore = new LevelDatastore(join(dataPath, "datastore"));
   let helia: Helia | undefined;
 
   await datastore.open();
